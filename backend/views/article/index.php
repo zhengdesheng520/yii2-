@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 ?>
-<h1>article/index</h1>
+
 
 <?php
 /* @var $this yii\web\View */
@@ -24,9 +24,9 @@
         <tr>
             <td><?=$row->id?></td>
             <td><?=$row->name?></td>
-            <td><?=$row->article_category_id?></td>
+            <td><?=$row->category->name?></td>
             <td><?=$row->intro?></td>
-            <td><?=$row->status?></td>
+            <td><?=Yii::$app->params['status'][$row->status]?></td>
             <td><?=$row->sort?></td>
             <td><a href="<?=\yii\helpers\Url::to(['look','id'=>$row->id])?>">查看内容</a></td>
             <td><?=date('Y-m-d H:i:s',$row->createtime)?></td>

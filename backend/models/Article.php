@@ -22,17 +22,17 @@ class Article extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-   public function behaviors()
-   {
-       return[
-         [
-             'class'=>TimestampBehavior::className(),
-             'attributes' => [
-                 ActiveRecord::EVENT_BEFORE_INSERT=>["createtime"]
-             ]
-         ]
-       ];
-   }
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ["createtime"]
+                ]
+            ]
+        ];
+    }
 
 
     public static function tableName()
@@ -46,8 +46,8 @@ class Article extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-          [['name','article_category_id','intro','status'],'required'],
-            [['sort'],'safe']
+            [['name', 'article_category_id', 'intro', 'status'], 'required'],
+            [['sort'], 'safe']
         ];
     }
 
@@ -69,7 +69,9 @@ class Article extends \yii\db\ActiveRecord
     }
 
 
-    public function getContent(){
-        return $this->hasOne(ArticleDetail::className(),['article_id'=>'id']);
-    }
+    public function getCategory()
+    {
+        return $this->hasOne(ArticleCategory::className(),['id'=>'article_category_id']);
+}
+
 }

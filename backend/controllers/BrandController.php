@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\Brand;
 use yii\web\UploadedFile;
+use flyok666\qiniu\Qiniu;
 
 class BrandController extends \yii\web\Controller
 {
@@ -82,24 +83,49 @@ class BrandController extends \yii\web\Controller
 //            var_dump($_FILES);
         // 正确时， 其中 attachment 指的是保存在数据库中的路径，url 是该图片在web可访问的地址
        // {"code": 0, "url": "http://domain/图片地址", "attachment": "图片地址"}
-        $files=UploadedFile::getInstanceByName("file");
-        //判定有没有上传路径
-        if ($files) {
-            //拼接路径
-            $path="images/brand/".time().'.'.$files->extension;
-            //移动图片
-            if ($files->saveAs($path,false)) {
-                //保存图片
-                $result=[
-                    'code'=>0,
-                    'url'=>"/".$path,
-                    'attachment'=>$path
-                ];
-                echo json_encode($result);
-            }
-        }
+//        $files=UploadedFile::getInstanceByName("file");
+        //判定有没有上传
+//        if ($files) {
+//            //拼接路径
+//            $path="images/brand/".time().'.'.$files->extension;
+//            //移动图片
+//            if ($files->saveAs($path,false)) {
+//                //保存图片
+//                $result=[
+//                    'code'=>0,
+//                    'url'=>"/".$path,
+//                    'attachment'=>$path
+//                ];
+//                echo json_encode($result);
+//            }
+//        }
+        //上传到七牛云
 
+        $config = [
+            'accessKey' => 'EAd29Qrh05q78_cZhajAWcbB1wYCBLyHLqkanjOG',//AK
+            'secretKey' => '_R5o3ZZpPJvz8bNGBWO9YWSaNbxIhpsedbiUtHjW',//SK
+            'domain' => 'http://p1ht4b07w.bkt.clouddn.com',//临时域名
+            'bucket' => 'php0830',//空间名称
+            'area' => Qiniu::AREA_HUADONG//区域
+        ];
+        //实例化对象
+        $qiniu=new Qiniu($config);
+//        var_dump($qiniu);exit;
+        //上传后的文件名
+        $imgName=uniqid();
+//        var_dump($imgName);exit;
+        //调用上传方法上传文件
+        $qiniu->uploadFile($_FILES['file']['tmp_name'],$imgName);
+        //得到上传后的地址
+        $url=$qiniu->getLink($imgName);
+        //返回结果
+        $result=[
+            'code'=>0,
+            'url'=>$url,
+            'attachment'=>$url,
+        ];
 
+        return json_encode($result);
 
     }
 

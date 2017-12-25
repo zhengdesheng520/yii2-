@@ -7,15 +7,16 @@ use yii\widgets\ActiveForm;
 /* @var $model backend\models\Article */
 /* @var $form ActiveForm */
 ?>
+<h1>添加文章</h1>
 <div class="article-add">
 
     <?php $form = ActiveForm::begin(); ?>
 
         <?= $form->field($model, 'name') ?>
-        <?= $form->field($model, 'article_category_id') ?>
+        <?= $form->field($model, 'article_category_id')->dropDownList($cateArr) ?>
         <?= $form->field($model, 'intro') ?>
-        <?= $form->field($content, 'content')->textarea() ?>
-        <?= $form->field($model, 'status')->radioList([0=>'是',1=>'否'],['value'=>0]) ?>
+        <?= $form->field($content, 'content')->widget('kucha\ueditor\UEditor',[]); ?>
+        <?= $form->field($model, 'status')->radioList(Yii::$app->params['status'],['value'=>'1']) ?>
 
         <?= $form->field($model, 'sort')->textInput(["value"=>50]) ?>
     

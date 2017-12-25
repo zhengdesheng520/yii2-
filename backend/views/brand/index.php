@@ -15,7 +15,7 @@
     <tr>
         <td><?=$row->id?></td>
         <td><?=$row->name?></td>
-        <td><?=\yii\bootstrap\Html::img("/".$row->logo,["height"=>50])?></td>
+        <td><?=\yii\bootstrap\Html::img($row->logo,["height"=>50])?></td>
         <td><?=Yii::$app->params["status"][$row->status]?></td>
         <td><?=$row->sort?></td>
         <td><?=$row->intro?></td>

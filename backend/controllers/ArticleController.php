@@ -3,10 +3,22 @@
 namespace backend\controllers;
 
 use backend\models\Article;
+use backend\models\ArticleCategory;
 use backend\models\ArticleDetail;
+use yii\helpers\ArrayHelper;
 
 class ArticleController extends \yii\web\Controller
 {
+    public function actions()
+    {
+        return [
+            'upload'=>[
+                'class'=>'kucha\ueditor\UEditorAction'
+            ]
+        ];
+    }
+
+
     public function actionIndex()
     {
         $article = Article::find()->orderBy('id')->all();
@@ -17,6 +29,11 @@ class ArticleController extends \yii\web\Controller
     {
 
         $model = new Article();
+        $content=new ArticleDetail();
+        //得到所有的文章分类
+        $category=ArticleCategory::find()->asArray()->all();
+        //转换成键值对
+        $cateArr=ArrayHelper::map($category,'id','name');
 
         $request=\Yii::$app->request;
         if ($request->isPost) {
@@ -24,36 +41,32 @@ class ArticleController extends \yii\web\Controller
             if ($model->validate()) {
                 $model->save();
 //                return $this->redirect(['index']);
-            }else{
-                var_dump($model->getErrors());
-            }
-
-        }
-        $content=new ArticleDetail();
-        $request=\Yii::$app->request;
-        if ($request->isPost) {
-            $content->load($request->post());
-            if ($content->validate()) {
+                $content->load($request->post());
                 $content->article_id=$model->id;
-
                 $content->save();
                 return $this->redirect(['index']);
-            }else{
-                var_dump($content->getErrors());
+
             }
 
         }
 
 
-        return $this->render('add', compact('model','content'));
+
+
+
+        return $this->render('add', compact('model','content','cateArr'));
     }
 
 
 
     //修改文章
 public function actionEdit($id){
-
     $model = Article::findOne($id);
+    $content=ArticleDetail::find()->where(['article_id'=>$id])->one();
+    //得到所有的文章分类
+    $category=ArticleCategory::find()->asArray()->all();
+    //转换成键值对
+    $cateArr=ArrayHelper::map($category,'id','name');
 
     $request=\Yii::$app->request;
     if ($request->isPost) {
@@ -61,29 +74,20 @@ public function actionEdit($id){
         if ($model->validate()) {
             $model->save();
 //                return $this->redirect(['index']);
-        }else{
-            var_dump($model->getErrors());
-        }
-
-    }
-    $content=ArticleDetail::findOne($id);
-    $request=\Yii::$app->request;
-    if ($request->isPost) {
-        $content->load($request->post());
-        if ($content->validate()) {
+            $content->load($request->post());
             $content->article_id=$model->id;
-
             $content->save();
             return $this->redirect(['index']);
-        }else{
-            var_dump($content->getErrors());
+
         }
 
     }
 
 
-    return $this->render('add', compact('model','content'));
 
+
+
+    return $this->render('add', compact('model','content','cateArr'));
 
 }
 
