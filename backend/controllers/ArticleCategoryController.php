@@ -3,13 +3,26 @@
 namespace backend\controllers;
 
 use backend\models\ArticleCategory;
+use yii\data\Pagination;
 
 class ArticleCategoryController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $category=ArticleCategory::find()->all();
-        return $this->render('index',compact('category'));
+//        $category=ArticleCategory::find()->all();
+        $query=ArticleCategory::find()->orderBy('id');
+        //设置分页
+        //得到数据的总条数
+        $count=$query->count();
+        //得到分页对象
+        $pageObj=new Pagination([
+            'totalCount' => $count,
+            'pageSize' => 3
+        ]);
+        $category=$query->offset($pageObj->offset)->limit($pageObj->limit)->all();
+
+
+        return $this->render('index',compact('category','pageObj'));
     }
 
 

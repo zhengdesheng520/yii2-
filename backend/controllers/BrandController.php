@@ -11,9 +11,33 @@ class BrandController extends \yii\web\Controller
     public function actionIndex()
     {
 
-        $brand = Brand::find()->all();
+        $brand = Brand::find()->where(['status'=>1])->all();
         return $this->render('index', compact("brand"));
     }
+
+    //设置禁用启用
+    public function actionChang($id){
+        $model=Brand::findOne($id);
+        if($model->status===1){
+            $model->status=2;
+            $model->save();
+            return $this->redirect(['index']);
+        }else{
+            $model->status=1;
+            $model->save();
+            return $this->redirect(['back']);
+        }
+
+    }
+    public function actionBack(){
+
+        $model=Brand::find()->where(['status'=>2])->orderBy('id')->all();
+
+        return $this->render('back',compact('model'));
+
+    }
+
+
 
 
     public function actionAdd()
@@ -102,10 +126,11 @@ class BrandController extends \yii\web\Controller
         //上传到七牛云
 
         $config = [
-            'accessKey' => 'EAd29Qrh05q78_cZhajAWcbB1wYCBLyHLqkanjOG',//AK
-            'secretKey' => '_R5o3ZZpPJvz8bNGBWO9YWSaNbxIhpsedbiUtHjW',//SK
-            'domain' => 'http://p1ht4b07w.bkt.clouddn.com',//临时域名
-            'bucket' => 'php0830',//空间名称
+            'accessKey' => '2PkV3UFQINHKWEQ1svmiJ7wJe3MsRigTj_OsZ5e9',//AK
+            'secretKey' => 'EAK4piJt68WSfMb4rYwROym5oHxbrT38XlrN0Hgt',//SK
+            'domain' => 'http://p1jtt4pir.bkt.clouddn.com',//临时域名
+
+            'bucket' => 'yiishop',//空间名称
             'area' => Qiniu::AREA_HUADONG//区域
         ];
         //实例化对象

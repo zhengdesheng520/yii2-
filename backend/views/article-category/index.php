@@ -31,6 +31,9 @@
         </tr>
     <?php endforeach;?>
 </table>
+<?=\yii\widgets\LinkPager::widget([
+        'pagination' => $pageObj
+])?>
 
 
 

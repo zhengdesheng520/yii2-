@@ -21,9 +21,37 @@ class ArticleController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        $article = Article::find()->orderBy('id')->all();
+        $article = Article::find()->where(['status'=>1])->orderBy('id')->all();
         return $this->render('index', compact('article'));
     }
+
+    //设置禁用启用
+    public function actionChang($id){
+        $model=Article::findOne($id);
+        if($model->status===1){
+            $model->status=2;
+            $model->save();
+            return $this->redirect(['index']);
+        }else{
+            $model->status=1;
+            $model->save();
+            return $this->redirect(['back']);
+        }
+
+    }
+
+    public function actionBack(){
+
+        $model=Article::find()->where(['status'=>2])->orderBy('id')->all();
+
+        return $this->render('back',compact('model'));
+
+    }
+
+
+
+
+
 
     public function actionAdd()
     {
