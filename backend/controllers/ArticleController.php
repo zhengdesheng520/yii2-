@@ -21,6 +21,7 @@ class ArticleController extends \yii\web\Controller
 
     public function actionIndex()
     {
+//        $article=Article::find()->all();
         $article = Article::find()->where(['status'=>1])->orderBy('id')->all();
         return $this->render('index', compact('article'));
     }
@@ -121,10 +122,18 @@ public function actionEdit($id){
 
 //删除
 public function actionDel($id){
-    if (Article::findOne($id)->delete()) {
-        return $this->redirect(['index']);
-    }
+    $model=Article::findOne($id);
+    //找到该文章下的内容并一起删除
+    $detail=ArticleDetail::find()->where(['article_id'=>$model->id])->one();
+//    var_dump($detail);exit;
+$model->delete();
+$detail->delete();
+return $this->redirect(['index']);
+
+
 }
+
+
 public function actionLook($id){
 //    var_dump($id);exit;>
     $article=ArticleDetail::find()->where(['article_id'=>$id])->one();

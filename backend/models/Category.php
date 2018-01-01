@@ -85,4 +85,13 @@ class Category extends \yii\db\ActiveRecord
             'intro' => '简介',
         ];
     }
+
+    public function getDeep(){
+
+        return str_repeat("-",$this->depth*4).$this->name;
+    }
+
+
+
+
 }

@@ -1,6 +1,6 @@
 <?php
 return [
-    'layout'=>'desheng.php',
+//    'layout'=>'desheng.php',
     'language'=>'zh-CN',
     'timeZone'=>'PRC',
     'aliases' => [

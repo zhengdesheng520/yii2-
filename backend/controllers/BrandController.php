@@ -128,10 +128,10 @@ class BrandController extends \yii\web\Controller
         $config = [
             'accessKey' => '2PkV3UFQINHKWEQ1svmiJ7wJe3MsRigTj_OsZ5e9',//AK
             'secretKey' => 'EAK4piJt68WSfMb4rYwROym5oHxbrT38XlrN0Hgt',//SK
-            'domain' => 'http://p1jtt4pir.bkt.clouddn.com',//临时域名
+            'domain' => 'http://p1jt28cdr.bkt.clouddn.com',//临时域名
 
-            'bucket' => 'yiishop',//空间名称
-            'area' => Qiniu::AREA_HUADONG//区域
+            'bucket' => 'yii2',//空间名称
+            'area' => Qiniu::AREA_HUANAN//区域
         ];
         //实例化对象
         $qiniu=new Qiniu($config);

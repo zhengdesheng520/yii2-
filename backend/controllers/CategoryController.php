@@ -4,29 +4,30 @@ namespace backend\controllers;
 
 use backend\models\Category;
 use yii\data\Pagination;
+use yii\db\Exception;
 use yii\helpers\Json;
 
 class CategoryController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-//        $category = Category::find()->all();
-
-        $query = Category::find()->orderBy("id");
-        //设置分页
-        //得到数据总条数
-        $count = $query->count();
-        //得到分页对象
-        $pagobj = new Pagination([
-            "totalCount" => $count,
-            //每页显示条数
-            "pageSize" => 4
-        ]);
-        //设置起始位置Limite
-        $category = $query->offset($pagobj->offset)->limit($pagobj->limit)->all();
-
-
-        return $this->render("index", compact("category", "pagobj"));
+        $category = Category::find()->orderBy('tree,lft')->all();
+        return $this->render('index', ['category' => $category]);
+//        $query = Category::find()->orderBy("tree,lft");
+//        //设置分页
+//        //得到数据总条数
+//        $count = $query->count();
+//        //得到分页对象
+//        $pagobj = new Pagination([
+//            "totalCount" => $count,
+//            //每页显示条数
+//            "pageSize" => 4
+//        ]);
+//        //设置起始位置Limite
+//        $category = $query->offset($pagobj->offset)->limit($pagobj->limit)->all();
+//
+//
+//        return $this->render("index", compact("category", "pagobj"));
 
 
     }
@@ -92,6 +93,9 @@ class CategoryController extends \yii\web\Controller
             $model->load($request->post());
             //后端验证
             if ($model->validate()) {
+                try{
+
+
                 //如果parent_id等于零的情况下，判定为创建顶级分类
                 if ($model->parent_id == 0) {
                     $model->makeRoot();
@@ -104,22 +108,30 @@ class CategoryController extends \yii\web\Controller
                     $parent = Category::findOne($model->parent_id);
                     //var_dump($parent);exit;
                     $model->prependTo($parent);
-                    \Yii::$app->session->setFlash('danger', '把' . $model->name . '追加到' . $parent->name . '里面成功');
+                    \Yii::$app->session->setFlash('danger', '修改成功');
 
 
                 }
-                //跳转
+                }catch (Exception $exception){
+                    //跳转
 
-                return $this->redirect(['index']);
-                \Yii::$app->session->setFlash('success','修改成功');
+
+                    \Yii::$app->session->setFlash('success',$exception->getMessage());
+
+                }
 
             }
+            return $this->redirect(['index']);
 
         }
 
 
         return $this->render('add', ['model' => $model, 'cateArr' => $cateArr]);
     }
+
+
+
+
     public function actionDel($id){
         if (Category::findOne($id)->deleteWithChildren()) {
             return $this->redirect(['index']);

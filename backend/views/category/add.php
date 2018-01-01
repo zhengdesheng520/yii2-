@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
         <?= $form->field($model, 'name') ?>
-        <?= $form->field($model, 'parent_id')->hiddenInput(['value'=>0]) ?>
+        <?= $form->field($model, 'parent_id') ?>
     <?= \liyuze\ztree\ZTree::widget([
         'setting' => '{
 			data: {
@@ -48,12 +48,13 @@ use yii\widgets\ActiveForm;
 </div><!-- category-add -->
 <?php
 //全部分类自动展开
-$js=<<<EOP
+$js=<<<js
 var treeObj = $.fn.zTree.getZTreeObj("w1");
 treeObj.expandAll(true);
+  var node = treeObj.getNodeByParam("id", "{$model->parent_id}", null);//得到节点
+    treeObj.selectNode(node);//选择节点
 
-
-EOP;
+js;
 $this->registerJs($js);
 
 

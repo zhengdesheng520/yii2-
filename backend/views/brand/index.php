@@ -1,7 +1,8 @@
 <?php
 /* @var $this yii\web\View */
 ?>
-<h1>品牌展示</h1><a href="<?=\yii\helpers\Url::to(['brand/add'])?>"class="btn btn-info">添加品牌</a>
+<h1>品牌展示</h1>
+<a href="<?=\yii\helpers\Url::to(['brand/add'])?>"class="btn btn-info">添加品牌</a>
 <a href="<?=\yii\helpers\Url::to(['back'])?>"title="回收站"><span class="glyphicon glyphicon-trash "style="color: red;font-size: 30px;float: right"></span></a>
 <table class="table table-bordered table-striped">
     <tr>
