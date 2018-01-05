@@ -22,7 +22,10 @@ use yii\web\IdentityInterface;
  * @property integer $last_login_ip
  */
 class Admin extends \yii\db\ActiveRecord implements IdentityInterface
+
 {
+    public $name;
+
     public function behaviors()
     {
         return [
@@ -35,6 +38,15 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
         ];
     }
 
+
+    public function scenarios()
+    {
+        return [
+            'create' => ['username', 'email', 'password','name'],
+            'update' => ['username', 'email','name'],
+
+        ];
+    }
 
 
     /**
@@ -51,11 +63,12 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password', 'email'], 'required'],
+            [['username', 'email','password'], 'required','on' => 'create'],
+            [['password'], 'required', 'on' => 'update'],
+            [['name'],'safe'],
+            [['token_create_time', 'add_time', 'last_login_time', 'last_login_ip','token'], 'safe'],
 
-            [['token','salt'],'safe'],
-            [['token_create_time', 'add_time', 'last_login_time', 'last_login_ip'], 'safe'],
-            [['username', 'password', 'email', 'token'], 'string', 'max' => 255],
+
         ];
     }
 

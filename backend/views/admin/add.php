@@ -14,12 +14,8 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'username') ?>
         <?= $form->field($model, 'password') ?>
         <?= $form->field($model, 'email') ?>
+        <?= $form->field($model, 'name')->checkboxList($roleArr) ?>
 
-
-
-
-
-    
         <div class="form-group">
             <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
         </div>

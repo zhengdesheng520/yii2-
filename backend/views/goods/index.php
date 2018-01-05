@@ -64,7 +64,7 @@
             <td><?=$row->shop_price?></td>
             <td><?=$row->stock?></td>
             <td><?=$row->sort?></td>
-            <td><?=$row->inputtime?></td>
+            <td><?=date('Y-m-d H:i:s',$row->inputtime)?></td>
 
             <td>
                 <a href="<?=\yii\helpers\Url::to(['edit','id'=>$row->id])?>"title="编辑"><spanp class="glyphicon glyphicon-edit btn-lg"style="color: green"></spanp></a>

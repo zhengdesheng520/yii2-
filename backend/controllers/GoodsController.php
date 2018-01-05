@@ -58,7 +58,7 @@ class GoodsController extends \yii\web\Controller
 //        //创建一个分页对象
         $pageObj=new Pagination([
            'totalCount' => $count,
-           'pageSize' => 4
+           'pageSize' => 3
         ]);
 //        //设置limit 开始位置
         $goods=$query->offset($pageObj->offset)->limit($pageObj->limit)->all();

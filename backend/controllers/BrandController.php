@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\Brand;
+use backend\models\Goods;
 use yii\web\UploadedFile;
 use flyok666\qiniu\Qiniu;
 
@@ -92,6 +93,15 @@ class BrandController extends \yii\web\Controller
         public function actionDel($id){
             $model=Brand::findOne($id);
             $oldImg=Brand::findOne($id)->logo;
+            $goods=Goods::find()->where(['brand_id'=>$id])->one();
+//            echo "<pre>";
+//            var_dump($goods);exit;
+
+            if($goods){
+                \Yii::$app->session->setFlash('danger','该品牌下面有商品，请先删除对应的商品');
+                return $this->redirect(['index']);
+            }
+//            exit;
             if ($model->delete()) {
                 //删除品牌时，同时删除图片
                 unlink($oldImg);

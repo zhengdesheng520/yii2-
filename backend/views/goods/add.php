@@ -21,7 +21,10 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'shop_price') ?>
         <?= $form->field($model, 'stock') ?>
         <?= $form->field($model, 'sort') ?>
+
         <?= $form->field($model, 'logo') ->widget(\manks\FileInput::className(),['clientOptions' => [ 'server' => \yii\helpers\Url::to(['brand/upload'])]])?>
+
+
         <?= $form->field($goodIntro, 'content')->widget('kucha\ueditor\UEditor',[]) ?>
         <?= $form->field($model, 'imgFiles')->widget('manks\FileInput', [
             'clientOptions' => [
