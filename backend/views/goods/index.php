@@ -3,6 +3,7 @@
 ?>
 
 <h1>商品展示</h1>
+<div class="table-responsive">
 <div>
     <div class="pull-left">
         <a href="<?=\yii\helpers\Url::to(['add'])?>"class="btn btn-info">添加商品</a>
@@ -78,5 +79,7 @@
 <?=\yii\widgets\LinkPager::widget([
         'pagination' => $pageObj,
 ])?>
+
+</div>
 
 

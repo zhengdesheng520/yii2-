@@ -2,7 +2,7 @@
 /* @var $this yii\web\View */
 ?>
 <h1>物品分类展示</h1>
-
+<div CLASS="table-responsive">
 <a href="<?=\yii\helpers\Url::to(['add'])?>"class="btn btn-info">添加分类</a>
 <div>
 <table class="table">
@@ -30,6 +30,7 @@
     <?php endforeach;?>
 </table>
 
+</div>
 </div>
 
 

@@ -2,7 +2,7 @@
 /* @var $this yii\web\View */
 ?>
 <h1>role/index</h1>
-
+<div class="table-responsive">
 <a href="<?=\yii\helpers\Url::to(['add'])?>"class="btn btn-info">添加权限组</a>
 
 <table class="table table-bordered table-striped">
@@ -35,3 +35,4 @@
         </tr>
     <?php endforeach;?>
 </table>
+</div>

@@ -2,6 +2,7 @@
 /* @var $this yii\web\View */
 ?>
 <h1>分类管理</h1>
+<div class="table-responsive">
 
 <a href="<?=\yii\helpers\Url::to(['add'])?>"class="btn btn-info">添加文章</a>
 <table class="table">
@@ -34,6 +35,7 @@
 <?=\yii\widgets\LinkPager::widget([
         'pagination' => $pageObj
 ])?>
+</div>
 
 
 

@@ -2,6 +2,7 @@
 /* @var $this yii\web\View */
 ?>
 <h1>管理员列表</h1>
+<div class="table-responsive">
 <table class="table table-bordered">
     <tr>
         <th>id</th>
@@ -34,5 +35,6 @@
 
 
 </table>
+</div>
 
 

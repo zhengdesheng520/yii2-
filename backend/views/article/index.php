@@ -7,6 +7,7 @@
 /* @var $this yii\web\View */
 ?>
 <h1>文章展示</h1>
+<div class="table-responsive">
 <a href="<?=\yii\helpers\Url::to(['article/add'])?>"class="btn btn-info">添加文章</a>
 <a href="<?=\yii\helpers\Url::to(['back'])?>"title="回收站"><span class="glyphicon glyphicon-trash "style="color: red;font-size: 30px;float: right"></span></a>
 <table class="table">
@@ -42,5 +43,6 @@
         </tr>
     <?php endforeach;?>
 </table>
+</div>
 
 
