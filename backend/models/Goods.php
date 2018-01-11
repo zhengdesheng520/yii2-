@@ -89,5 +89,12 @@ public $imgFiles;
         return $this->hasOne(Category::className(),['id'=>'good_category_id']);
     }
 
+    public function getIntro(){
+        return $this->hasOne(GoodsIntro::className(),['goods_id'=>'id']);
+    }
+    public function getImgs(){
+        return $this->hasMany(GoodsImg::className(),['goods_id'=>'id']);
+    }
+
 
 }
