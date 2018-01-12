@@ -180,6 +180,7 @@
 						<a href="javascript:;" id="forward" class="on"></a>
 						<div class="smallpic_wrap">
 							<ul>
+<!--                                循环一对多传过来的图片-->
                                 <?php foreach ($goods->imgs as $k=>$v):?>
 								<li class="<?=$k==0?"cur":""?>">
 									<a class="<?=$k==0?"zoomThumbActive":""?>" href="javascript:void(0);" rel="{gallery: 'gal1', smallimage: '<?=$v->path."?imageView2/1/w/350/h/350"?>',largeimage: '<?=$v->path."?imageView2/1/w/800/h/800"?>'}"><img src="<?=$v->path."?imageView2/1/w/50/h/50"?>"></a>
@@ -202,7 +203,8 @@
 						<li><span>上架时间：</span><?=date('Y-m-d',$goods->inputtime)?></li>
 						<li class="star"><span>商品评分：</span> <strong></strong><a href="">(已有21人评价)</a></li> <!-- 此处的星级切换css即可 默认为5星 star4 表示4星 star3 表示3星 star2表示2星 star1表示1星 -->
 					</ul>
-					<form action="" method="post" class="choose">
+					<form action="<?=\yii\helpers\Url::to(['cart/add-cart'])?>" method="get" class="choose">
+                        <input type="hidden"name="id"value="<?=$goods->id?>">
 						<ul>
 							
 							<li>

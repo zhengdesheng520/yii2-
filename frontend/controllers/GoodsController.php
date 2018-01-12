@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use backend\models\Category;
 use backend\models\Goods;
+use yii\web\Cookie;
 
 class GoodsController extends \yii\web\Controller
 {
@@ -44,6 +45,11 @@ class GoodsController extends \yii\web\Controller
 
     }
 
+
+public function actionTest(){
+    //得到cookie缓存的数据
+    var_dump(\Yii::$app->request->cookies->getValue('cart'));
+}
 
 
 
