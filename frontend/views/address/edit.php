@@ -78,33 +78,11 @@
 
 		<!-- 右侧内容区域 start -->
 		<div class="content fl ml10">
-			<div class="address_hd">
-				<h3>收货地址薄</h3>
-				<dl>
-                    <?php foreach (\frontend\models\Address::find()->orderBy('id')->offset(0)->limit(2)->all() as $row):?>
-					<dt>
-                        <?=$row->id?>. <?=$row->name?> <?=$row->province?> <?=$row->city?> <?=$row->town?> <?=$row->address?> <?=$row->phone?> </dt>
-                    <dd>
-						<a href="<?=\yii\helpers\Url::to(['address/edit','id'=>$row->id])?>">修改</a>
-						<a href="">删除</a>
-						<a href="">设为默认地址</a>
-					</dd>
-				</dl>
-                <?php endforeach;?>
-<!--				<dl class="last"> <!-- 最后一个dl 加类last -->
-<!--					<dt>2.许坤 四川省 成都市 高新区 仙人跳大街 17002810530 </dt>-->
-<!--					<dd>-->
-<!--						<a href="">修改</a>-->
-<!--						<a href="">删除</a>-->
-<!--						<a href="">设为默认地址</a>-->
-<!--					</dd>-->
-<!--				</dl>-->
 
-			</div>
 
 			<div class="address_bd mt10">
 				<h4>新增收货地址</h4>
-				<form action="<?=\yii\helpers\Url::to(['address/add'])?>"method="post" name="address_form">
+				<form action="<?=\yii\helpers\Url::to(['address/edit','id'=>$model->id])?>"method="post" name="address_form">
                     <input type="hidden"name="_csrf-frontend"value="<?=Yii::$app->request->csrfToken?>">
 						<ul>
 							<li>
@@ -123,11 +101,11 @@
 							</li>
 							<li>
 								<label for=""><span>*</span>详细地址：</label>
-								<input type="text" name="Address[address]" class="txt address"  />
+								<input type="text" value="<?=$model->address?>" name="Address[address]" class="txt address"  />
 							</li>
 							<li>
 								<label for=""><span>*</span>手机号码：</label>
-								<input type="text" name="Address[phone]" class="txt" />
+								<input type="text" name="Address[phone]" class="txt"value="<?=$model->phone?>" />
 							</li>
 							<li>
 								<label for="">&nbsp;</label>
@@ -147,7 +125,7 @@
                     <script language="javascript" defer>
 
 
-                        new PCAS("Address[province]","Address[city]","Address[town]");
+                        new PCAS("Address[province]","Address[city]","Address[town]",'<?=$model->province?>','<?=$model->city?>','<?=$model->town?>');
 
                     </script>
 

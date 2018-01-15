@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\components\ShopCart;
 use frontend\models\LoginForm;
 use frontend\models\User;
 use Mrgoon\AliSms\AliSms;
@@ -24,7 +25,7 @@ class UserController extends \yii\web\Controller
         ];
     }
 //登录
-    public function actionLogin(){
+    public function actionLogin($back='/home/index'){
         $user=new LoginForm();
         $request=\Yii::$app->request;
         if($request->isPost){
@@ -39,7 +40,15 @@ class UserController extends \yii\web\Controller
                     $password=\Yii::$app->security->validatePassword($user->password,$result->password_hash);
                     if($password){
                         \Yii::$app->user->login($result,$user->remeMber?3600*24*7:0);
-                        return $this->redirect(['home/index']);
+                        //登陆成功保存cookie里面的购物车数据
+                        //调用组件里面的类，实例化
+                        $shopCart=new ShopCart();
+                        $shopCart->insert();
+
+                        $shopCart->flush()->save();
+
+
+                        return $this->redirect([$back]);
 
                     }else{
                         echo "<script>alert('密码错误')</script>";

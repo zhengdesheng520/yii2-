@@ -28,8 +28,8 @@ class Cart extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['good_id', 'user_id'], 'integer'],
-            [['amount'], 'string', 'max' => 255],
+            [['good_id', 'user_id','amount'], 'integer'],
+//            [['amount'], 'string', 'max' => 255],
         ];
     }
 

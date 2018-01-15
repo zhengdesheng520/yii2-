@@ -34,7 +34,7 @@
 		</div>
 		<div class="login_bd">
 			<div class="login_form fl">
-				<form action="/user/login" method="post" id="in">
+				<form action="" method="post" id="in">
                     <input type="hidden"name="_csrf-frontend"value="<?=Yii::$app->request->csrfToken?>">
 					<ul>
 						<li>

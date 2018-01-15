@@ -80,20 +80,28 @@
 		<div class="content fl ml10">
 			<div class="address_hd">
 				<h3>收货地址薄</h3>
-				<dl>
-                    <?php foreach (\frontend\models\Address::find()->orderBy('id')->offset(0)->limit(2)->all() as $row):?>
-					<dt>
-                        <?=$row->id?>. <?=$row->name?> <?=$row->province?> <?=$row->city?> <?=$row->town?> <?=$row->address?> <?=$row->phone?> </dt>
+
+                    <?php foreach (\frontend\models\Address::find()->orderBy('id desc')->offset(0)->limit(2)->all() as $k=>$row):?>
+                        <dl>
+                    <dt class="text">
+
+                        <?=$row->id?>. <?=$row->name?> <?=$row->province?> <?=$row->city?> <?=$row->town?> <?=$row->address?> <?=$row->phone?>
+                    </dt>
                     <dd>
-						<a href="javascript:void (0)" id="edit">修改</a>
-						<a href="">删除</a>
-						<a href="">设为默认地址</a>
+						<a href="<?=\yii\helpers\Url::to(['edit','id'=>$row->id])?>" class="edit">修改</a>
+						<a href="<?=\yii\helpers\Url::to(['del','id'=>$row->id])?>">删除</a>
+						<a href="<?=\yii\helpers\Url::to(['default','id'=>$row->id])?>">设为默认地址</a>
 					</dd>
 				</dl>
                 <?php endforeach;?>
 
 
 			</div>
+
+
+
+
+
 
 			<div class="address_bd mt10">
 				<h4>新增收货地址</h4>
@@ -140,7 +148,10 @@
                     <script type="text/javascript" src="/user_css/js/jquery-1.8.3.min.js"></script>
                     <script language="javascript" defer>
                         new PCAS("Address[province]","Address[city]","Address[town]");
-
+//                    $(".edit").click(function () {
+//                        var data=$(this).parent().parent().find('.text').text();
+//                        console.debug(data);
+//                    })
 
 
                     </script>

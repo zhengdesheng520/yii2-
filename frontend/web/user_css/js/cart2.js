@@ -3,7 +3,40 @@
 @作者：diamondwang
 @时间：2013年11月14日
 */
+
+//添加提交方法
+function submit() {
+	document.getElementById('order').submit();
+
+}
+
+
 $(function(){
+ 		// 添加点击配送方式从新计算应付金额
+	$("input[name=delivery]").change(function () {
+		// console.debug(111);
+		//找到当前input框下的属性为data-price的；
+		var yunfei=$(this).attr('data-price');
+		// console.dir(yunfei);
+		//添加到对应的地方
+		$("#yunFei").text(yunfei);
+		var totalPrice=$('#totalPrice').text();
+		// console.debug(totalPrice);
+		var allMoeny=totalPrice*1+yunfei*1;
+		//取小数点后两位toFixed
+		allMoeny=allMoeny.toFixed(2);
+		console.debug(allMoeny);
+		//把总金额展示出来
+		$(".allPrice").text(allMoeny);
+
+
+
+
+    });
+
+
+
+
 	//收货人修改
 	$("#address_modify").click(function(){
 		$(this).hide();
