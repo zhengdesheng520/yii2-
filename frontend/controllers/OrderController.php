@@ -188,7 +188,7 @@ class OrderController extends \yii\web\Controller
         if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS'){
             //生成二维码
 //            ,false,Enum::QR_ECLEVEL_H,6
-            return QrCode::png($result->code_url,false,Enum::QR_ECLEVEL_H,6);
+                       return QrCode::png($result->code_url,false,Enum::QR_ECLEVEL_H,6);
 
         }else{
                     var_dump($result);
@@ -241,6 +241,31 @@ class OrderController extends \yii\web\Controller
         return $response;
 
     }
+
+
+    //订单超过多少时间未支付，订单状态改成取消订单
+    public function actionClear(){
+        //1. 找出 超时 未支付 订单 time()-创建时间>15*60  time()-15*60>创建时间
+        $order=Order::find()->where(['status'=>1])->andWhere(['<','create_time',time()-15*60])->asArray()->all();
+//        var_dump($order);exit;
+        //把所有要取消的订单的ID取出来
+        $backId=array_column($order,'id');
+        //把所有超时的订单状态改成取消  0为取消，1为未支付，2为待发送
+        Order::updateAll(['status'=>0],['in','id',$backId]);
+        //订单取消，还原对应商品的库存
+        foreach ($backId as $back){
+//            var_dump($back);exit;
+            $orderGoods=OrderDatail::find()->where(['order_id'=>$back])->all();
+//            var_dump($orderGoods);exit;
+
+        }
+
+//        var_dump($backId);exit;
+
+    }
+
+
+
 
 
 }
